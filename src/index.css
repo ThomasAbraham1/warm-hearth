@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-parchment: #fcf9f8;
+  --color-charcoal: #1b1c1c;
+  --color-charcoal-secondary: #56423c;
+  --color-terracotta: #9d3d1e;
+  --color-sage: #506446;
+  --color-warm-border: #e8ddd9;
+  --color-card-bg: #fff8f5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 20px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Nunito', system-ui, sans-serif;
+  background-color: var(--color-parchment);
+  color: var(--color-charcoal);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure ALL interactive elements meet 56px min touch target */
+button,
+input,
+select,
+a {
+  min-height: 56px;
+}
+
+input, select {
+  font-size: 1.1rem;
+  font-family: 'Nunito', system-ui, sans-serif;
+}
+
+/* Remove default focus ring, add custom warm one */
+*:focus-visible {
+  outline: 3px solid var(--color-terracotta);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* Smooth view transitions */
+.view-enter {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.view-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f0e8e4;
+}
+::-webkit-scrollbar-thumb {
+  background: #c4a89f;
+  border-radius: 4px;
+}
