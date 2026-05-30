@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { ChevronLeft, Clock, ShoppingBag, CalendarDays, Sunrise, Sun, Moon } from 'lucide-react';
 import useAppStore from '../store/useAppStore';
 import { DELIVERY_TIMES } from '../data/mockData';
@@ -113,6 +114,23 @@ export default function Checkout() {
   const grandTotal    = subtotal + deliveryFee;
 
   const allSelected = mealSlots.size === 3;
+
+  // Map slot id → prefix used in DELIVERY_TIMES strings
+  const SLOT_PREFIX = { breakfast: 'Breakfast', lunch: 'Lunch', dinner: 'Dinner' };
+
+  // Only show times whose prefix matches an active meal slot
+  const filteredTimes = DELIVERY_TIMES.filter((t) =>
+    [...mealSlots].some((slot) => t.startsWith(SLOT_PREFIX[slot]))
+  );
+
+  // Auto-reset to first valid time whenever meal slots change and current
+  // selection is no longer in the filtered list
+  useEffect(() => {
+    if (!filteredTimes.includes(selectedDeliveryTime)) {
+      setDeliveryTime(filteredTimes[0] ?? '');
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mealSlots]);
 
   return (
     <div className="min-h-screen bg-[#fcf9f8]">
@@ -294,7 +312,7 @@ export default function Checkout() {
               backgroundPosition: 'right 1.25rem center',
             }}
           >
-            {DELIVERY_TIMES.map((t) => (
+            {filteredTimes.map((t) => (
               <option key={t} value={t}>{t}</option>
             ))}
           </select>
