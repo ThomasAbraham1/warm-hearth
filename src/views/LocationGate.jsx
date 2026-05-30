@@ -27,7 +27,7 @@ const KNOWN_AREAS = {
 
 export default function LocationGate() {
   const setUserLocation = useAppStore((s) => s.setUserLocation);
-  const [pincode, setPincode] = useState('');
+  const [pincode, setPincode] = useState('400066');
   const [error, setError] = useState('');
   const [checking, setChecking] = useState(false);
 
@@ -141,8 +141,7 @@ export default function LocationGate() {
         </button>
 
         <p className="text-center text-[0.75rem] text-[#56423c] mt-5 leading-relaxed">
-          Try pincode <strong>400066</strong>, <strong>600017</strong>, or{' '}
-          <strong>110027</strong> for a demo.
+          You can change the pincode above if needed.
         </p>
       </div>
 

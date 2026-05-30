@@ -56,6 +56,32 @@ const useAppStore = create((set, get) => ({
 
   setDeliveryTime: (time) => set({ selectedDeliveryTime: time }),
 
+  // ─── Schedule ─────────────────────────────────────────────
+  // scheduleDays: { label, days } – how many days the plan runs
+  scheduleDays: { label: 'Today Only', days: 1 },
+
+  setScheduleDays: (option) => set({ scheduleDays: option }),
+
+  // mealSlots: Set of selected meal times ('breakfast' | 'lunch' | 'dinner')
+  mealSlots: new Set(['lunch']),
+
+  toggleMealSlot: (slot) =>
+    set((state) => {
+      const next = new Set(state.mealSlots);
+      if (next.has(slot) && next.size === 1) return {}; // keep at least one
+      next.has(slot) ? next.delete(slot) : next.add(slot);
+      return { mealSlots: next };
+    }),
+
+  setAllMealSlots: () =>
+    set({ mealSlots: new Set(['breakfast', 'lunch', 'dinner']) }),
+
+  // Returns how many total meal deliveries the schedule represents
+  getScheduleMultiplier: () => {
+    const { scheduleDays, mealSlots } = get();
+    return scheduleDays.days * mealSlots.size;
+  },
+
   // 0: Placed | 1: Accepted | 2: Preparing | 3: Out for Delivery | 4: Delivered
   orderStatus: 0,
 
